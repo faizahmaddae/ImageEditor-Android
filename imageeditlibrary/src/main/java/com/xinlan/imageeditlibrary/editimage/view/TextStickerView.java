@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.text.DynamicLayout;
 import android.text.Layout;
 import android.text.TextPaint;
@@ -64,6 +65,8 @@ public class TextStickerView extends View {
     private static final int ROTATE_MODE = 4;//旋转模式
     private static final int DELETE_MODE = 5;//删除模式
 
+    private Typeface myFont;
+
     private EditText mEditText;//输入控件
 
     public int layout_x = 0;
@@ -99,6 +102,14 @@ public class TextStickerView extends View {
         initView(context);
     }
 
+    public Typeface getMyFont() {
+        return myFont;
+    }
+
+    public void setMyFont(Typeface myFont) {
+        this.myFont = myFont;
+    }
+
     public void setEditText(EditText textView) {
         this.mEditText = textView;
     }
@@ -117,10 +128,13 @@ public class TextStickerView extends View {
         mDeleteDstRect = new RectF(0, 0, Constants.STICKER_BTN_HALF_SIZE << 1, Constants.STICKER_BTN_HALF_SIZE << 1);
         mRotateDstRect = new RectF(0, 0, Constants.STICKER_BTN_HALF_SIZE << 1, Constants.STICKER_BTN_HALF_SIZE << 1);
 
+
+
         mPaint.setColor(Color.WHITE);
         mPaint.setTextAlign(Paint.Align.CENTER);
         mPaint.setTextSize(TEXT_SIZE_DEFAULT);
         mPaint.setAntiAlias(true);
+        mPaint.setTypeface(this.getMyFont());
         mPaint.setTextAlign(Paint.Align.LEFT);
 
         mHelpPaint.setColor(Color.BLACK);
@@ -234,6 +248,8 @@ public class TextStickerView extends View {
 
         mTextRect.offset(x, y);
 
+
+
         mHelpBoxRect.set(mTextRect.left - PADDING, mTextRect.top - PADDING
                 , mTextRect.right + PADDING, mTextRect.bottom + PADDING);
         RectUtil.scaleRect(mHelpBoxRect, scale);
@@ -249,6 +265,7 @@ public class TextStickerView extends View {
         //System.out.println("left = "+left +"   right = "+right);
         int draw_text_y = y + (text_height >> 1) + PADDING;
         for (int i = 0; i < mTextContents.size(); i++) {
+            mPaint.setTypeface(this.getMyFont());
             canvas.drawText(mTextContents.get(i), x, draw_text_y, mPaint);
             draw_text_y += text_height;
         }//end for i

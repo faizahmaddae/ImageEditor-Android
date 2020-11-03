@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.xinlan.imageeditlibrary.R;
 import com.xinlan.imageeditlibrary.editimage.EditImageActivity;
@@ -40,6 +42,7 @@ public class AddTextFragment extends BaseEditFragment implements TextWatcher {
 
     private EditText mInputText;//输入框
     private ImageView mTextColorSelector;//颜色选择器
+    private ImageView img_font;
     private TextStickerView mTextStickerView;// 文字贴图显示控件
     private CheckBox mAutoNewLineCheck;
 
@@ -47,6 +50,8 @@ public class AddTextFragment extends BaseEditFragment implements TextWatcher {
 
     private int mTextColor = Color.WHITE;
     private InputMethodManager imm;
+
+    private Typeface myFont;
 
     private SaveTextStickerTask mSaveTask;
 
@@ -74,20 +79,33 @@ public class AddTextFragment extends BaseEditFragment implements TextWatcher {
 
         mTextStickerView = (TextStickerView)getActivity().findViewById(R.id.text_sticker_panel);
 
+        myFont = Typeface.createFromAsset(activity.getAssets(), "fonts/Mj_Tunisia_Bd.ttf");
+
         backToMenu = mainView.findViewById(R.id.back_to_main);
         mInputText = (EditText) mainView.findViewById(R.id.text_input);
         mTextColorSelector = (ImageView) mainView.findViewById(R.id.text_color);
+        img_font = (ImageView) mainView.findViewById(R.id.img_font);
         mAutoNewLineCheck = (CheckBox) mainView.findViewById(R.id.check_auto_newline);
 
         backToMenu.setOnClickListener(new BackToMenuClick());// 返回主菜单
         mColorPicker = new ColorPicker(getActivity(), 255, 0, 0);
         mTextColorSelector.setOnClickListener(new SelectColorBtnClick());
         mInputText.addTextChangedListener(this);
+        mInputText.setTypeface(myFont);
+
         mTextStickerView.setEditText(mInputText);
 
         //统一颜色设置
         mTextColorSelector.setBackgroundColor(mColorPicker.getColor());
         mTextStickerView.setTextColor(mColorPicker.getColor());
+
+
+        img_font.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(activity, "yes its for font", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -95,6 +113,8 @@ public class AddTextFragment extends BaseEditFragment implements TextWatcher {
         //mTextStickerView change
         String text = s.toString().trim();
         mTextStickerView.setText(text);
+
+        mTextStickerView.setMyFont(myFont);
     }
 
     @Override

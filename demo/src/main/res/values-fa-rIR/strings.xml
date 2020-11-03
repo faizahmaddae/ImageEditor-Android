@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">عکس نوشته تاز حرفه ای</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">تنطیمات</string>
+    <string name="choose_image">انتخاب عکس</string>
+    <string name="edit_image">ویرایش عکس</string>
+    <string name="save_path">ذخیره در : %s</string>
+    <string name="take_photo">گرفتن عکس</string>
+</resources>
